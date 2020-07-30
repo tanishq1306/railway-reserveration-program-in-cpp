@@ -1,0 +1,432 @@
+#include<fstream.h>
+#include<conio.h>
+#include<dos.h>              //for delay
+#include<stdlib.h>
+#include<stdio.h>
+#include<process.h>
+#include<string.h>
+int flag=0,price;
+
+class person
+{
+  char lname[15];
+  int tamt;
+  char st1[10];
+  char st2[10];
+  char fname[15];
+  char tckt[10];
+  int noft;
+  char mno[10];
+  void pay();
+public:
+  char* re_fname() { return fname;}
+  char* re_mno() {return mno;}
+  int re_noft() {return noft;}
+
+void getdata()
+{
+  cout<<"\nEnter Your First Name:";
+  gets(fname);
+  delay(300);
+  cout<<"\nEnter Your Last Name:";
+  gets(lname);
+  delay(300);
+  cout<<"\nEnter Your Contact No.:";
+gets(mno);
+delay(300);
+cout<<"\nBoarding point:";gets(st1);
+cout<<"\nDestination pt:";gets(st2);
+pay();
+}
+
+void display()
+{
+cout<<"\nFull Name Of Passenger:  "<<fname<<" "<<lname;
+cout<<"\nMobile No.  "<<mno;
+cout<<"\nType Of Ticket Booked: "<<tckt;
+cout<<"\n Boarding point: "<<st1;
+cout<<"\n Destination pt: "<<st2;
+cout<<"\nNo Of Tickets:  "<<noft;
+cout<<"\nTotal Amount:  "<<tamt;
+}
+};
+void write(person &p)
+{
+  ofstream fout;
+fout.open("person.txt",ios::out|ios::binary|ios::ate);
+ fout.write((char*)&p,sizeof(person));
+fout.close();
+}
+
+
+void records()
+{
+ ifstream fin;
+ //fin.clear();
+ int num=1;
+fin.open("person.txt",ios::in|ios::binary);
+person p;
+while(!fin.eof())
+{ fin.read((char*)&p,sizeof(p));
+  if(fin.eof()) break;
+  clrscr();
+  cout<<"\t \t ("<<num<<")";
+  p.display();
+  getch();
+  num++;
+}
+fin.close();
+}
+
+
+void person::pay()
+{
+int m,price=50;
+cout<<"\n1.Ticket for Local\n2.Ticket For Sleeper\n3.Ticket For A.C";
+cout<<"\nEnter Your Choice:";
+cin>>m;
+cout<<"\nEnter No Of Tickets: ";
+cin>>noft;
+if(m==1)
+{
+cout<<"Price for one ticket "<<price;
+strcpy(tckt,"Local");
+}
+else if(m==2)
+{price=price*3;
+cout<<"Price for one ticket "<<price;
+strcpy(tckt,"sleeper");
+}
+else if(m==3)
+{price=price*5;
+cout<<"Price for one ticket "<<price;
+strcpy(tckt,"A.C");
+}
+
+tamt=price*noft;
+cout<<"  Your Total Amount Is: "<<tamt;
+
+cout<<"\nEnter The Mode Of Payment";
+cout<<"\n\n1.Paytm";
+cout<<"\n\n2.Debit/Credit";
+cout<<"\n\nEnter Your Choice:";
+cin>>m;
+
+if(m==1)
+{
+char mn[10];
+cout<<"\nEnter Your Mobile No.";
+gets(mn);
+cout<<"\nPayment Confirmed";
+cout<<"\tTHANK YOU FOR USING............";
+}
+else if(m==2)
+{int acno;
+cout<<"Enter your Account No.";
+cin>>acno;
+cout<<"\nPayment Confirmed";
+cout<<"\tTHANK YOU FOR USING............";
+
+}
+}
+void login();
+int main()
+{        //starting page
+char nmm[10];
+
+textcolor(YELLOW);
+textbackground(BLUE);
+clrscr();
+gotoxy(10,5);
+cprintf("\nCOMPUTER PROJECT");
+delay(1000);
+cprintf("\nSUBMITTED BY - TANISHQ SAINI");
+delay(1000);
+cprintf("\nSUBMITTED TO - SHEKHAR SIR");
+delay(1000);
+
+gotoxy(28,15);
+textcolor(YELLOW+BLINK);
+cprintf("Press ENTER T0 Continue....................");
+getch();
+
+//login as user or admin
+login();
+
+//next page entry
+char a[]={"WELCOME TO WESTERN RAILWAYS  "};
+textbackground(CYAN);
+clrscr();
+gotoxy(22,1);
+
+for(int i=0;i<30;i++)
+{cout<<a[i];
+delay(100);
+}
+
+
+int num=0;
+
+do
+{
+i=3;
+textcolor(WHITE);
+textbackground(CYAN);
+clrscr();
+gotoxy(22,1);
+cout<<a;
+
+
+gotoxy(20,i=i+2);
+cprintf("1.Book Ticket");
+
+gotoxy(20,i=i+2);
+cprintf("2.Booking Records");
+
+gotoxy(20,i=i+2);
+cprintf("3.Cancel Ticket");
+
+gotoxy(20,i=i+2);
+cprintf("4.Details Of Various Trains");
+
+gotoxy(20,i=i+2);
+cprintf("5.Search For Your Record");
+
+gotoxy(20,i=i+2);
+cprintf("6.Exit");
+
+gotoxy(20,i=i+2);
+cprintf("Enter Your Choice: ");
+
+
+cin>>num;
+clrscr();
+
+textbackground(YELLOW);
+textcolor(YELLOW);
+clrscr();
+switch(num)
+{
+case 1:
+int nm,nof;
+person p1;
+p1.getdata();
+write(p1);
+getch();
+break;
+
+case 2:
+if(flag==1)
+{cout<<"                       Welcome Administrator";
+cout<<"\nRecords Are:/n";
+records();
+cout<<"\n\npress enter to exit..............";
+getch();
+break;
+}
+else
+cout<<"\n                     SORRY ONLY FOR ADMINISTRATOR";
+cout<<"\n\npress enter to exit..............";
+getch();
+break;
+
+case 3:
+int f=0;
+ifstream file("person.txt",ios::in|ios::binary); /// ios::ate
+cout<<" Enter your first name: \t";
+gets(nmm);
+cout<<"\n \n \n";
+file.clear();
+file.seekg(0,ios::beg);
+ofstream temp("temp.txt",ios::binary|ios::out);
+while(file.read((char*)&p1,sizeof(p1)))
+{
+if(strcmpi(p1.re_fname(),nmm)==0)
+{
+f=1;
+p1.display();
+cout<<"\n \n Do you really want to delete this record \? (y/n) \n";
+char choice;
+choice=getche();
+if(choice=='n'||choice=='N')
+{temp.write((char*)&p1,sizeof(p1));
+}
+else
+{
+cout<<"\n .................Record deleted successfully..............";
+}
+}
+else temp.write((char*)&p1,sizeof(p1));
+
+}
+if(f!=1)cout<<"\n ..............Sorry, student not found..............";
+temp.close();
+file.close();
+remove("person.txt");
+rename("temp.txt","person.txt");
+cout<<"\n \n \t \t......Press any key to continue.......";
+getch();
+
+break;
+
+case 4:
+
+char str[120];
+ifstream fin("r_list.txt",ios::in);
+while(!fin.eof())
+{
+  fin.getline(str,120);
+  cout<<str<<'\n';
+  if(fin.eof()) break;
+}
+fin.close();
+getch();
+break;
+
+case 5:
+fin.open("person.txt",ios::in|ios::binary);
+person p;
+int flg=0;
+cout<<"\nenter the name to be searched ";
+gets(nmm);
+while(fin.read((char*)&p,sizeof(p)))
+{
+if(strcmpi(nmm,p.re_fname())==0)
+{ p.display();
+  getch();
+  flg=1;
+}
+}
+if(flg==0)
+cout<<"\nSORRY RECORD NOT FOUND ";
+fin.close();
+getch();
+break;
+
+case 6:
+cout<<"............EXIT.................";
+exit(0);
+
+default:
+gotoxy(20,i=i+2);
+cprintf("Invalid key, try again !! ");
+getch();
+
+};
+}while(1);
+}
+
+
+
+void login()
+{
+a:
+clrscr();
+int ch;
+textcolor(WHITE);
+textbackground(BLACK);
+gotoxy(10,5);
+
+clrscr();
+cprintf("\nENTER YOUR MODE:\n");
+cprintf("1. Administrator");
+cprintf(" OR 2. User ");
+cin>>ch;
+
+char pass[5];
+if(ch==1)
+{
+gotoxy(10,8);
+cprintf("Please Enter Your Password");
+gets(pass);
+
+if(strcmpi(pass,"india")==0)
+{cprintf("\nPassword confirmed");
+cout<<"\n\nPress enter to continue";
+flag=1;
+getch(); }
+else
+{
+cprintf("\nIncorrect Password SORRY!!!!!");
+cprintf("\nENDING PROCESS....................");
+delay(1000);
+cout<<"\ntry again";
+goto a;
+}
+}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

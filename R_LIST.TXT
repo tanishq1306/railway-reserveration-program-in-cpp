@@ -1,0 +1,22 @@
+------------------------------**** "TRAINS FROM NEEMUCH" ****-----------------------------------------
+Arrives	Departs	Stop time	M	T	W	T	F	S	S
+Hyb Aii Special (07020)
+18:37	18:42	5 min	N	N	N	N	Y	N	N
+Koaa Aii Express (19605)
+03:39	03:44	5 min	N	N	N	N	N	Y	N
+Ypr Jp Express (09704)
+04:55	05:05	10 min	N	N	Y	N	N	N	N
+Ypr Jp Express (06529)
+04:55	05:05	10 min	N	N	N	N	Y	N	N
+Jp Ypr Special (06530)
+05:30	05:35	5 min	Y	N	N	N	N	N	N
+St Aii Special (09610)
+09:10	09:12	2 min	N	N	Y	N	N	N	N
+Aii Indb Special (09312)
+16:28	16:30	2 min	Y	N	N	N	N	N	N
+Aii St Special (09609)
+10:48	10:50	2 min	N	N	Y	N	N	N	N
+Indb Ajmer Special (09311)
+04:28	04:30	2 min	N	N	N	N	N	N	Y
+Dehradun Express (29020)
+12:40	12:50	10 min	Y	Y	Y	Y	Y	Y	Y
